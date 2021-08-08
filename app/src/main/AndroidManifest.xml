@@ -19,7 +19,7 @@
         android:theme="@style/Theme.RunningApp"
         tools:ignore="MissingClass">
         <activity
-            android:name=".MainActivity2"
+            android:name=".ui.MainActivity2"
             android:exported="true"
             android:launchMode="singleTask">
             <intent-filter>
