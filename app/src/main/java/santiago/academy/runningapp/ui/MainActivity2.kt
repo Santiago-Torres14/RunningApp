@@ -1,5 +1,6 @@
 package santiago.academy.runningapp.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import santiago.academy.runningapp.R
 import santiago.academy.runningapp.databinding.ActivityMain2Binding
+import santiago.academy.runningapp.other.Constants.ACTION_SHOW_TRACKING_FRAGMENT
 
 
 private const val TAG = ".MainActivity"
@@ -24,6 +26,8 @@ class MainActivity2 : AppCompatActivity() {
         binding = ActivityMain2Binding.inflate(layoutInflater)
         val rootView = binding.root
         setContentView(rootView)
+
+        navigateToTrackingFragmentIfNeeded(intent)
 
         val navHostFragment = findNavController(R.id.navHostFragment)
 
@@ -45,5 +49,16 @@ class MainActivity2 : AppCompatActivity() {
         }
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        navigateToTrackingFragmentIfNeeded(intent)
+    }
+
+    private fun navigateToTrackingFragmentIfNeeded(intent: Intent?){
+        if(intent?.action == ACTION_SHOW_TRACKING_FRAGMENT){
+            val navHostFragment = findNavController(R.id.navHostFragment)
+            navHostFragment.navigate(R.id.action_global_trackingFragment)
+        }
+    }
 
 }
