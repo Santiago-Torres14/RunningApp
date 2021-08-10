@@ -19,6 +19,7 @@ import santiago.academy.runningapp.other.Constants.ACTION_START_OR_RESUME_SERVIC
 import santiago.academy.runningapp.other.Constants.MAP_ZOOM
 import santiago.academy.runningapp.other.Constants.POLYLINE_COLOR
 import santiago.academy.runningapp.other.Constants.POLYLINE_WIDTH
+import santiago.academy.runningapp.other.TrackingUtility
 import santiago.academy.runningapp.services.Polyline
 import santiago.academy.runningapp.services.TrackingService
 import santiago.academy.runningapp.ui.viewmodels.MainViewModel
@@ -30,6 +31,8 @@ class TrackingFragment: Fragment(R.layout.fragment_tracking) {
 
     private var isTracking = false
     private var pathPoints = mutableListOf<Polyline>()
+
+    private var curTimeInMillis = 0L
 
     private var _binding: FragmentTrackingBinding? = null
     private val binding get() = _binding!!
@@ -71,6 +74,12 @@ class TrackingFragment: Fragment(R.layout.fragment_tracking) {
             pathPoints = it
             addLatestPolyline()
             moveCameraToUser()
+        })
+
+        TrackingService.timeRunInMillis.observe(viewLifecycleOwner, Observer {
+            curTimeInMillis = it
+            val formattedTime = TrackingUtility.getFormattedStopWatchTime(curTimeInMillis, true)
+            binding.tvTimer.text = formattedTime
         })
     }
 
